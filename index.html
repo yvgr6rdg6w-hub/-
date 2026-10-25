@@ -1,1 +1,549 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkFinder — найди работу мечты</title>
+<style>
+  :root{
+    --bg:#0d1117;
+    --panel:#161b22;
+    --panel-2:#1c2330;
+    --line:#2a3342;
+    --text:#e6edf3;
+    --muted:#8b96a5;
+    --accent:#2f81f7;
+    --accent-2:#1f6feb;
+    --green:#3fb950;
+    --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
 
+  /* ---------- Шапка ---------- */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(13,17,23,.85);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    max-width:1180px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 24px;
+  }
+  .logo{
+    font-size:22px; font-weight:700; letter-spacing:-.5px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .logo-mark{
+    width:30px; height:30px; border-radius:8px;
+    background:linear-gradient(135deg,var(--accent),#8957e5);
+    display:grid; place-items:center;
+    font-size:15px; font-weight:800; color:#fff;
+  }
+  .nav-links{display:flex; gap:28px; align-items:center}
+  .nav-links a{
+    color:var(--muted); text-decoration:none; font-size:15px;
+    transition:color .25s; position:relative;
+  }
+  .nav-links a:hover{color:var(--text)}
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:-6px;
+    width:0; height:2px; background:var(--accent);
+    transition:width .3s;
+  }
+  .nav-links a:hover::after{width:100%}
+  .btn{
+    display:inline-block; border:none; cursor:pointer;
+    font-family:inherit; font-size:15px; font-weight:600;
+    padding:11px 24px; border-radius:10px;
+    transition:transform .2s, box-shadow .3s, background .3s;
+    text-decoration:none;
+  }
+  .btn-primary{
+    background:var(--accent); color:#fff;
+  }
+  .btn-primary:hover{
+    background:var(--accent-2);
+    transform:translateY(-2px);
+    box-shadow:0 8px 24px rgba(47,129,247,.35);
+  }
+  .btn-ghost{
+    background:transparent; color:var(--text);
+    border:1px solid var(--line);
+  }
+  .btn-ghost:hover{border-color:var(--accent); color:var(--accent)}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    max-width:1180px; margin:0 auto;
+    padding:90px 24px 70px;
+    text-align:center;
+    position:relative;
+  }
+  .hero::before{
+    content:''; position:absolute; top:-120px; left:50%;
+    transform:translateX(-50%);
+    width:700px; height:700px;
+    background:radial-gradient(circle, rgba(47,129,247,.18), transparent 65%);
+    pointer-events:none;
+  }
+  .hero h1{
+    font-size:clamp(32px,6vw,58px);
+    font-weight:800; letter-spacing:-1.5px;
+    line-height:1.15; margin-bottom:22px;
+    animation:fadeUp .9s ease both;
+  }
+  .hero h1 span{
+    background:linear-gradient(90deg,var(--accent),#8957e5);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .hero p{
+    color:var(--muted); font-size:clamp(16px,2.2vw,19px);
+    max-width:620px; margin:0 auto 38px;
+    animation:fadeUp .9s .15s ease both;
+  }
+  .search-bar{
+    display:flex; gap:10px; max-width:640px; margin:0 auto;
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:var(--radius); padding:8px;
+    animation:fadeUp .9s .3s ease both;
+    transition:border-color .3s, box-shadow .3s;
+  }
+  .search-bar:focus-within{
+    border-color:var(--accent);
+    box-shadow:0 0 0 4px rgba(47,129,247,.12);
+  }
+  .search-bar input{
+    flex:1; background:transparent; border:none; outline:none;
+    color:var(--text); font-family:inherit; font-size:16px;
+    padding:10px 14px;
+  }
+  .search-bar input::placeholder{color:var(--muted)}
+  .search-bar .btn{padding:12px 26px}
+
+  @keyframes fadeUp{
+    from{opacity:0; transform:translateY(28px)}
+    to{opacity:1; transform:translateY(0)}
+  }
+
+  /* ---------- Фильтры ---------- */
+  .filters{
+    max-width:1180px; margin:0 auto; padding:0 24px 30px;
+    display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+  }
+  .chip{
+    background:var(--panel); border:1px solid var(--line);
+    color:var(--muted); font-family:inherit; font-size:14px;
+    padding:9px 20px; border-radius:100px; cursor:pointer;
+    transition:all .25s;
+  }
+  .chip:hover{border-color:var(--accent); color:var(--text)}
+  .chip.active{
+    background:var(--accent); border-color:var(--accent);
+    color:#fff;
+  }
+
+  /* ---------- Сетка вакансий ---------- */
+  .jobs{
+    max-width:1180px; margin:0 auto; padding:20px 24px 80px;
+    display:grid; gap:18px;
+    grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  }
+  .card{
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:var(--radius); padding:24px;
+    transition:transform .3s, border-color .3s, box-shadow .3s;
+    animation:fadeUp .6s ease both;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:''; position:absolute; top:0; left:0;
+    width:100%; height:3px;
+    background:linear-gradient(90deg,var(--accent),#8957e5);
+    transform:scaleX(0); transform-origin:left;
+    transition:transform .35s;
+  }
+  .card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(47,129,247,.5);
+    box-shadow:0 14px 34px rgba(0,0,0,.45);
+  }
+  .card:hover::before{transform:scaleX(1)}
+
+  .card-top{
+    display:flex; justify-content:space-between;
+    align-items:flex-start; gap:14px; margin-bottom:16px;
+  }
+  .company{
+    width:48px; height:48px; border-radius:12px;
+    display:grid; place-items:center;
+    font-weight:800; font-size:18px; color:#fff;
+    flex-shrink:0;
+  }
+  .badge{
+    font-size:12px; font-weight:600; padding:5px 12px;
+    border-radius:100px; white-space:nowrap;
+  }
+  .badge.remote{background:rgba(63,185,80,.15); color:var(--green)}
+  .badge.office{background:rgba(139,150,165,.15); color:var(--muted)}
+  .badge.hybrid{background:rgba(137,87,229,.15); color:#a371f7}
+
+  .card h3{
+    font-size:18px; font-weight:700; margin-bottom:6px;
+    letter-spacing:-.3px;
+  }
+  .card .company-name{
+    color:var(--muted); font-size:14px; margin-bottom:16px;
+  }
+  .tags{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px}
+  .tag{
+    background:var(--panel-2); border:1px solid var(--line);
+    color:var(--muted); font-size:12px;
+    padding:4px 12px; border-radius:6px;
+  }
+  .card-bottom{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:16px; border-top:1px solid var(--line);
+  }
+  .salary{font-weight:700; font-size:16px; color:var(--green)}
+  .date{font-size:13px; color:var(--muted)}
+
+  /* ---------- Пустое состояние ---------- */
+  .empty{
+    grid-column:1/-1; text-align:center;
+    padding:70px 20px; color:var(--muted);
+    font-size:17px;
+    animation:fadeUp .5s ease both;
+  }
+
+  /* ---------- Статистика ---------- */
+  .stats{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:var(--panel);
+  }
+  .stats-inner{
+    max-width:1180px; margin:0 auto; padding:50px 24px;
+    display:grid; gap:30px;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    text-align:center;
+  }
+  .stat-num{
+    font-size:40px; font-weight:800; letter-spacing:-1px;
+    background:linear-gradient(90deg,var(--accent),#8957e5);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .stat-label{color:var(--muted); font-size:15px}
+
+  /* ---------- CTA ---------- */
+  .cta{
+    max-width:900px; margin:0 auto; padding:90px 24px;
+    text-align:center;
+  }
+  .cta h2{
+    font-size:clamp(26px,4vw,40px); font-weight:800;
+    letter-spacing:-1px; margin-bottom:18px;
+  }
+  .cta p{color:var(--muted); margin-bottom:34px; font-size:17px}
+  .cta-buttons{display:flex; gap:14px; justify-content:center; flex-wrap:wrap}
+
+  /* ---------- Футер ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:40px 24px; text-align:center;
+    color:var(--muted); font-size:14px;
+  }
+  footer a{color:var(--muted); text-decoration:none; transition:color .25s}
+  footer a:hover{color:var(--accent)}
+
+  /* ---------- Появление при скролле ---------- */
+  .reveal{opacity:0; transform:translateY(30px); transition:opacity .7s, transform .7s}
+  .reveal.visible{opacity:1; transform:translateY(0)}
+
+  /* ---------- Мобильная навигация ---------- */
+  @media (max-width:720px){
+    .nav-links{display:none}
+    .hero{padding:60px 20px 50px}
+    .search-bar{flex-direction:column}
+    .search-bar .btn{width:100%}
+    .jobs{padding:20px 16px 60px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="logo">
+      <div class="logo-mark">W</div>
+      WorkFinder
+    </div>
+    <div class="nav-links">
+      <a href="#jobs">Вакансии</a>
+      <a href="#stats">Компании</a>
+      <a href="#cta">О нас</a>
+    </div>
+    <a href="#cta" class="btn btn-primary">Разместить вакансию</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Найди работу, <span>которая тебе подходит</span></h1>
+  <p>Тысячи актуальных вакансий от проверенных компаний. Удалёнка, гибрид или офис — выбирай своё.</p>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Профессия, компания или навык...">
+    <button class="btn btn-primary" id="searchBtn">Найти</button>
+  </div>
+</section>
+
+<div class="filters" id="filters">
+  <button class="chip active" data-filter="all">Все</button>
+  <button class="chip" data-filter="remote">Удалёнка</button>
+  <button class="chip" data-filter="hybrid">Гибрид</button>
+  <button class="chip" data-filter="office">Офис</button>
+</div>
+
+<main class="jobs" id="jobs"></main>
+
+<section class="stats" id="stats">
+  <div class="stats-inner">
+    <div class="reveal">
+      <div class="stat-num" data-count="12450">0</div>
+      <div class="stat-label">Активных вакансий</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num" data-count="860">0</div>
+      <div class="stat-label">Компаний</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num" data-count="53200">0</div>
+      <div class="stat-label">Соискателей</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num" data-count="97">0</div>
+      <div class="stat-label">% довольных</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="cta">
+  <h2>Ищешь сотрудников?</h2>
+  <p>Размести вакансию и найди лучших специалистов за считанные дни.</p>
+  <div class="cta-buttons">
+    <a href="#" class="btn btn-primary">Разместить вакансию</a>
+    <a href="#" class="btn btn-ghost">Связаться с нами</a>
+  </div>
+</section>
+
+<footer>
+  WorkFinder — демо-проект. Сделано для GitHub Pages.
+</footer>
+
+<script>
+  /* ---------- Данные вакансий ---------- */
+  const jobsData = [
+    {
+      title: 'Frontend-разработчик',
+      company: 'Яндекс',
+      color: '#fc3f1d',
+      letter: 'Я',
+      type: 'remote',
+      typeLabel: 'Удалёнка',
+      tags: ['React', 'TypeScript', 'Redux'],
+      salary: 'от 180 000 ₽',
+      date: 'Сегодня'
+    },
+    {
+      title: 'Backend-разработчик (Python)',
+      company: 'Ozon',
+      color: '#005bff',
+      letter: 'O',
+      type: 'hybrid',
+      typeLabel: 'Гибрид',
+      tags: ['Python', 'Django', 'PostgreSQL'],
+      salary: 'от 200 000 ₽',
+      date: 'Вчера'
+    },
+    {
+      title: 'UI/UX дизайнер',
+      company: 'VK',
+      color: '#0077ff',
+      letter: 'V',
+      type: 'remote',
+      typeLabel: 'Удалёнка',
+      tags: ['Figma', 'Prototyping', 'UI'],
+      salary: 'от 130 000 ₽',
+      date: '2 дня назад'
+    },
+    {
+      title: 'DevOps инженер',
+      company: 'Сбер',
+      color: '#21a038',
+      letter: 'С',
+      type: 'office',
+      typeLabel: 'Офис',
+      tags: ['Kubernetes', 'Docker', 'CI/CD'],
+      salary: 'от 250 000 ₽',
+      date: 'Сегодня'
+    },
+    {
+      title: 'Аналитик данных',
+      company: 'Тинькофф',
+      color: '#ffdd2d',
+      letter: 'Т',
+      type: 'hybrid',
+      typeLabel: 'Гибрид',
+      tags: ['SQL', 'Python', 'Tableau'],
+      salary: 'от 170 000 ₽',
+      date: '3 дня назад'
+    },
+    {
+      title: 'Мобильный разработчик (iOS)',
+      company: 'Авито',
+      color: '#97cf26',
+      letter: 'А',
+      type: 'remote',
+      typeLabel: 'Удалёнка',
+      tags: ['Swift', 'UIKit', 'Combine'],
+      salary: 'от 220 000 ₽',
+      date: 'Вчера'
+    },
+    {
+      title: 'Product-менеджер',
+      company: 'Wildberries',
+      color: '#cb11ab',
+      letter: 'W',
+      type: 'office',
+      typeLabel: 'Офис',
+      tags: ['Product', 'Agile', 'Analytics'],
+      salary: 'от 190 000 ₽',
+      date: 'Сегодня'
+    },
+    {
+      title: 'QA-инженер',
+      company: 'Kaspersky',
+      color: '#006d5b',
+      letter: 'K',
+      type: 'remote',
+      typeLabel: 'Удалёнка',
+      tags: ['Testing', 'Selenium', 'Java'],
+      salary: 'от 140 000 ₽',
+      date: '4 дня назад'
+    }
+  ];
+
+  const jobsContainer = document.getElementById('jobs');
+  const searchInput = document.getElementById('searchInput');
+  const searchBtn = document.getElementById('searchBtn');
+  const chips = document.querySelectorAll('.chip');
+
+  let currentFilter = 'all';
+  let currentQuery = '';
+
+  /* ---------- Отрисовка карточек ---------- */
+  function renderJobs() {
+    const filtered = jobsData.filter(job => {
+      const matchesFilter = currentFilter === 'all' || job.type === currentFilter;
+      const q = currentQuery.toLowerCase().trim();
+      const matchesQuery = !q ||
+        job.title.toLowerCase().includes(q) ||
+        job.company.toLowerCase().includes(q) ||
+        job.tags.some(t => t.toLowerCase().includes(q));
+      return matchesFilter && matchesQuery;
+    });
+
+    if (filtered.length === 0) {
+      jobsContainer.innerHTML = '<div class="empty">По вашему запросу ничего не найдено. Попробуйте изменить фильтры.</div>';
+      return;
+    }
+
+    jobsContainer.innerHTML = filtered.map((job, i) => `
+      <article class="card" style="animation-delay:${i * 0.07}s">
+        <div class="card-top">
+          <div class="company" style="background:${job.color}">${job.letter}</div>
+          <span class="badge ${job.type}">${job.typeLabel}</span>
+        </div>
+        <h3>${job.title}</h3>
+        <div class="company-name">${job.company}</div>
+        <div class="tags">
+          ${job.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+        </div>
+        <div class="card-bottom">
+          <span class="salary">${job.salary}</span>
+          <span class="date">${job.date}</span>
+        </div>
+      </article>
+    `).join('');
+  }
+
+  /* ---------- Фильтры ---------- */
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      currentFilter = chip.dataset.filter;
+      renderJobs();
+    });
+  });
+
+  /* ---------- Поиск ---------- */
+  function doSearch() {
+    currentQuery = searchInput.value;
+    renderJobs();
+  }
+  searchBtn.addEventListener('click', doSearch);
+  searchInput.addEventListener('input', doSearch);
+  searchInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') doSearch();
+  });
+
+  /* ---------- Анимация счётчиков ---------- */
+  function animateCounters() {
+    document.querySelectorAll('.stat-num').forEach(el => {
+      const target = +el.dataset.count;
+      const duration = 1800;
+      const start = performance.now();
+      function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target).toLocaleString('ru-RU');
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  /* ---------- Появление при скролле ---------- */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        if (entry.target.closest('.stats') && !entry.target.dataset.counted) {
+          entry.target.dataset.counted = 'true';
+          animateCounters();
+        }
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ---------- Старт ---------- */
+  renderJobs();
+</script>
+</body>
+</html>
