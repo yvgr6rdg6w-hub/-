@@ -1,43 +1,178 @@
-# ⚠️ Нападение медведей в деревне Тюрт-Тас
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Хабарлар — Новости деревни Тюрт-Тас</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-**Дата:** 15 ноября 2024  
-**Автор:** Светлана Майерс  
-**Рубрика:** Происшествия
+body {
+  font-family: 'Georgia', serif;
+  background: #f4f1ea;
+  color: #2c2c2c;
+  line-height: 1.7;
+}
 
----
+header {
+  background: linear-gradient(135deg, #1a3a2a, #2d5a3f);
+  color: #fff;
+  text-align: center;
+  padding: 2rem 1rem;
+  border-bottom: 4px solid #c9a227;
+}
 
-## Трагедия в Тюрт-Тас
+header h1 {
+  font-size: 2.5rem;
+  letter-spacing: 0.3em;
+}
 
-В деревне **Тюрт-Тас** произошло нападение трёх бурых медведей.  
-В результате инцидента погибли **3 человека** — в основном пастухи,  
-а также один молодой человек.
+.subtitle {
+  font-style: italic;
+  opacity: 0.85;
+  margin-top: 0.4rem;
+}
 
-## Угроза распространения
+main {
+  max-width: 820px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
 
-Специалисты предупреждают о высокой вероятности миграции хищников  
-в соседние населённые пункты:
+.news-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
 
-- Аал **Лырсы**
-- Аал **Картоев**
-- Село **Усть-Хойза**
+.news-card.urgent {
+  border-left: 6px solid #c0392b;
+}
 
-## Предыдущий случай в Усть-Хойза
+.badge {
+  display: inline-block;
+  background: #c0392b;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
 
-Ранее в **Усть-Хойза** уже фиксировалось нападение медведей на фермеров.  
-Хищник был уничтожен. По описаниям очевидцев, это был медведь-предводитель:
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.6rem;
+  color: #1a3a2a;
+}
 
-| Параметр | Значение |
-|----------|----------|
-| Рост | 2,4 м |
-| Ширина в холке | ~1,1 м |
-| Вес (оценка) | 400–450 кг |
+h3 {
+  margin: 1.5rem 0 0.6rem;
+  color: #2d5a3f;
+  font-size: 1.2rem;
+}
 
-## Рекомендации населению
+.meta {
+  color: #777;
+  font-size: 0.9rem;
+  margin-bottom: 1.2rem;
+}
 
-- Не выходить в лес без необходимости
-- Не оставлять скот без присмотра
-- Сообщать о sightings хищников в экстренные службы
+.news-img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 1.2rem;
+}
 
----
+p { margin-bottom: 1rem; }
 
-*Материал подготовила Светлана Майерс для издания «Хабарлар».*
+ul {
+  margin: 0.5rem 0 1.2rem 1.5rem;
+}
+
+li { margin-bottom: 0.3rem; }
+
+strong { color: #1a3a2a; }
+
+.author-note {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #ccc;
+  font-style: italic;
+  color: #555;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: #888;
+  font-size: 0.9rem;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ХАБАРЛАР</h1>
+  <p class="subtitle">Новости региона · Деревня Тюрт-Тас</p>
+</header>
+
+<main>
+  <article class="news-card urgent">
+    <span class="badge">⚠️ СРОЧНО</span>
+    <h2>Нападение медведей в деревне Тюрт-Тас: 3 погибших</h2>
+    <p class="meta">
+      Автор: <strong>Светлана Майерс</strong> ·
+      <time datetime="2024-11-15">15 ноября 2024</time>
+    </p>
+
+    <p>
+      В деревне <strong>Тюрт-Тас</strong> произошло трагическое нападение
+      трёх бурых медведей. В результате инцидента погибли <strong>3 человека</strong>:
+      в основном пастухи и один молодой человек.
+    </p>
+
+    <h3>🚨 Угроза распространения</h3>
+    <p>
+      Специалисты предупреждают о высокой вероятности распространения опасности
+      на соседние населённые пункты:
+    </p>
+    <ul>
+      <li>Аал <strong>Лырсы</strong></li>
+      <li>Аал <strong>Картоев</strong></li>
+      <li>Село <strong>Усть-Хойза</strong></li>
+    </ul>
+
+    <h3>🐻 Недавний случай в Усть-Хойза</h3>
+    <p>
+      Ранее в <strong>Усть-Хойза</strong> уже фиксировалось нападение медведей
+      на местных фермеров. Тогда хищник был уничтожен.
+      По данным очевидцев, это был <strong>медведь-предводитель</strong>:
+    </p>
+    <ul>
+      <li>Рост: <strong>2,4 метра</strong></li>
+      <li>Ширина в холке: <strong>около 1,1 метра</strong></li>
+      <li>Вес: <strong>предположительно 400–450 кг</strong></li>
+    </ul>
+
+    <h3>📢 Рекомендации жителям</h3>
+    <p>
+      Власти призывают жителей быть предельно осторожными: не выходить
+      в лес без необходимости, не оставлять скот без присмотра и
+      немедленно сообщать о хищниках в экстренные службы.
+    </p>
+
+    <p class="author-note">
+      ✍️ Материал подготовила: <strong>Светлана Майерс</strong>
+    </p>
+  </article>
+</main>
+
+<footer>
+  <p>© 2024 Хабарлар — Новости региона</p>
+</footer>
+
+</body>
+</html>
