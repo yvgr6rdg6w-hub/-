@@ -39,8 +39,8 @@
         }
 
         .logo-container {
-            width: 250px;
-            height: 250px;
+            width: 300px;
+            height: 300px;
             border-radius: 50%;
             border: 2px solid #555;
             position: relative;
@@ -50,38 +50,49 @@
             justify-content: center;
             align-items: center;
             background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop') center/cover;
-            box-shadow: 0 0 30px rgba(255,255,255,0.1);
+            box-shadow: 0 0 40px rgba(255,255,255,0.1);
             margin-bottom: 15px;
         }
 
         .logo-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             z-index: 1;
         }
 
-        /* Анимация самолетика */
-        .plane {
+        /* --- ВЕКТОРНЫЙ САМОЛЕТИК (как на фото) --- */
+        .plane-wrapper {
             position: absolute;
-            font-size: 50px;
-            color: white;
-            z-index: 2;
-            animation: fly 8s infinite linear;
-            text-shadow: 0 0 15px rgba(255,255,255,0.8);
+            z-index: 3;
+            width: 120px;
+            height: 120px;
+            top: 30px;
+            left: 50%;
+            margin-left: -60px;
+            animation: fly-orbit 10s infinite linear;
+            perspective: 500px;
         }
 
-        @keyframes fly {
-            0% { transform: translate(-150px, 150px) rotate(45deg) scale(0.5); opacity: 0; }
-            20% { opacity: 1; transform: translate(-50px, 50px) rotate(45deg) scale(1); }
-            50% { transform: translate(50px, -50px) rotate(45deg) scale(1.2); }
-            80% { opacity: 1; transform: translate(100px, -100px) rotate(45deg) scale(0.8); }
-            100% { transform: translate(200px, -200px) rotate(45deg) scale(0.2); opacity: 0; }
+        .plane-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 20px rgba(255,255,255,0.2));
+            transform: rotate(-15deg);
+        }
+
+        /* Круговая траектория полета */
+        @keyframes fly-orbit {
+            0% { transform: rotate(0deg) translateY(-40px) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 1; }
+            50% { transform: rotate(180deg) translateY(-40px) rotate(-180deg) scale(1.1); }
+            90% { opacity: 1; }
+            100% { transform: rotate(360deg) translateY(-40px) rotate(-360deg) scale(0.8); opacity: 0; }
         }
 
         .logo-title {
             z-index: 2;
-            font-size: 36px;
+            font-size: 42px;
             font-weight: 900;
             text-transform: uppercase;
             font-style: italic;
@@ -89,13 +100,14 @@
             text-shadow: 2px 2px 10px rgba(0,0,0,0.9);
             line-height: 1;
             text-align: center;
+            margin-top: 40px; /* Сдвигаем текст вниз, чтобы самолетик был над ним */
         }
         
         .logo-title span {
             display: block;
-            font-size: 24px;
+            font-size: 14px;
             color: #aaa;
-            letter-spacing: 4px;
+            letter-spacing: 6px;
             margin-top: 5px;
             font-weight: 400;
         }
@@ -222,6 +234,7 @@
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .news-badge {
@@ -236,6 +249,7 @@
         .news-badge.urgent {
             background: #ff3b3b;
             animation: pulse 1.5s infinite;
+            box-shadow: 0 0 10px rgba(255, 59, 59, 0.5);
         }
 
         @keyframes pulse {
@@ -294,7 +308,30 @@
     <header>
         <div class="logo-container">
             <div class="logo-overlay"></div>
-            <div class="plane">✈️</div>
+            
+            <!-- Векторный самолетик -->
+            <div class="plane-wrapper">
+                <svg class="plane-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="planeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ffffff"/>
+                            <stop offset="100%" stop-color="#888888"/>
+                        </linearGradient>
+                        <linearGradient id="wingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#dddddd"/>
+                            <stop offset="100%" stop-color="#555555"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- Основной корпус -->
+                    <polygon points="10,50 85,10 90,15 45,60" fill="url(#planeGrad)" />
+                    <!-- Нижнее крыло -->
+                    <polygon points="45,60 90,15 95,80 55,70" fill="url(#wingGrad)" />
+                    <!-- Тень/глубина -->
+                    <polygon points="45,60 55,70 60,50" fill="#444" opacity="0.6"/>
+                    <polygon points="85,10 90,15 85,25" fill="#666" />
+                </svg>
+            </div>
+
             <div class="logo-title">
                 West<br>Post
                 <span>ТЕЛЕГРАМ КАНАЛ</span>
@@ -410,25 +447,56 @@
     </section>
 
     <script>
-        // Инициализация массива новостей из LocalStorage
-        let newsData = JSON.parse(localStorage.getItem('westPostNews')) || [];
+        // Начальные новости (загрузятся, если хранилище пустое)
+        const initialNews = [
+            {
+                id: 1,
+                title: "Переворот в Польше: оппозиция захватила здание парламента",
+                category: "Срочно",
+                author: "Александр Громов",
+                text: "Сегодня ночью в Варшаве произошли массовые беспорядки. Лидеры оппозиции объявили о создании временного правительства. Военные приведены в боевую готовность. Подробности выясняются.",
+                date: "31.10.2026, 03:15"
+            },
+            {
+                id: 2,
+                title: "Алешкина выступила с экстренным обращением к нации",
+                category: "Политика",
+                author: "Мария Соколова",
+                text: "В связи с событиями в Восточной Европе, официальный представитель РФ Алешкина сделала заявление. Она призвала к немедленному созыву Совета Безопасности ООН и подчеркнула недопустимость вмешательства внешних сил.",
+                date: "31.10.2026, 02:40"
+            },
+            {
+                id: 3,
+                title: "Крупнейший банк Европы объявил о заморозке активов",
+                category: "Бизнес",
+                author: "Финансовый отдел",
+                text: "На фоне политической нестабильности в Польше, европейские рынки открылись падением. Крупнейшие финансовые институты вводят временные ограничения на транзакции с Восточной Европой.",
+                date: "31.10.2026, 01:10"
+            }
+        ];
+
+        // Инициализация массива новостей
+        let newsData = JSON.parse(localStorage.getItem('westPostNews'));
+
+        // Если в LocalStorage пусто, загружаем начальные новости
+        if (!newsData || newsData.length === 0) {
+            newsData = initialNews;
+            localStorage.setItem('westPostNews', JSON.stringify(newsData));
+        }
 
         // Функция переключения разделов
         function showSection(sectionId) {
-            // Скрываем все секции
             document.querySelectorAll('main section, body > section').forEach(sec => {
                 sec.classList.remove('active');
                 sec.style.display = 'none';
             });
             
-            // Показываем нужную
             const target = document.getElementById(sectionId);
             if (target) {
                 target.classList.add('active');
                 target.style.display = 'block';
             }
             
-            // Если открываем главную, политику или бизнес, обновляем список
             if (sectionId === 'home' || sectionId === 'politics' || sectionId === 'business') {
                 renderNews(sectionId);
             }
@@ -455,10 +523,9 @@
                 date: new Date().toLocaleString('ru-RU')
             };
 
-            newsData.unshift(newNews); // Добавляем в начало
+            newsData.unshift(newNews);
             localStorage.setItem('westPostNews', JSON.stringify(newsData));
             
-            // Очищаем форму
             document.getElementById('news-title').value = '';
             document.getElementById('news-text').value = '';
             document.getElementById('news-author').value = '';
@@ -469,22 +536,19 @@
 
         // Функция отрисовки новостей
         function renderNews(filter = 'home') {
-            // Очищаем все контейнеры
-            document.getElementById('news-container').innerHTML = '';
-            document.getElementById('politics-container').innerHTML = '';
-            document.getElementById('business-container').innerHTML = '';
-
             const homeContainer = document.getElementById('news-container');
             const politicsContainer = document.getElementById('politics-container');
             const businessContainer = document.getElementById('business-container');
 
-            // Если новостей нет, показываем заглушку
+            homeContainer.innerHTML = '';
+            politicsContainer.innerHTML = '';
+            businessContainer.innerHTML = '';
+
             if (newsData.length === 0) {
                 homeContainer.innerHTML = '<p style="color:#666; text-align:center; padding: 40px;">Пока нет новостей. Добавьте первую в разделе "Добавить новость".</p>';
                 return;
             }
 
-            // Проходим по всем новостям
             newsData.forEach(news => {
                 const card = document.createElement('div');
                 card.className = 'news-card';
@@ -502,9 +566,19 @@
                     <p class="news-content">${news.text}</p>
                 `;
 
-                // Распределяем по разделам
                 if (news.category === 'Политика') {
                     politicsContainer.appendChild(card.cloneNode(true));
                 } else if (news.category === 'Бизнес') {
                     businessContainer.appendChild(card.cloneNode(true));
                 }
+                
+                homeContainer.appendChild(card);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNews('home');
+        });
+    </script>
+</body>
+</html>
