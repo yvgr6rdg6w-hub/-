@@ -1,307 +1,43 @@
+# ⚠️ Нападение медведей в деревне Тюрт-Тас
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080808">
-<title>FORBES 30 | ANAPA</title>
-<style>
-:root{--bg:#080808;--panel:#121212;--gold:#d8b46a;--text:#f4f1e9;--muted:#999;--border:#292929}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:85px}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
-a{color:inherit;text-decoration:none}
-button,input,textarea{font:inherit}
-button{cursor:pointer}
-.navbar{position:sticky;top:0;z-index:10;background:#080808ed;border-bottom:1px solid var(--border);padding:18px 7%;display:flex;justify-content:space-between;align-items:center;gap:20px;backdrop-filter:blur(12px)}
-.logo{font-size:23px;font-weight:900;letter-spacing:2px}.logo span,h1 span,h2 span{color:var(--gold)}
-nav{display:flex;gap:22px;font-size:13px;color:#bbb}nav a:hover{color:var(--gold)}
-.admin-btn,.outline-btn{background:transparent;color:var(--gold);border:1px solid var(--gold);padding:10px 14px}
-.hero{min-height:540px;padding:80px 9%;display:grid;grid-template-columns:1.5fr 1fr;align-items:center;gap:50px;background:radial-gradient(ellipse at 80% 40%,#332818,#11100d 30%,#080808 70%)}
-.eyebrow{color:var(--gold);letter-spacing:3px;font-size:10px;font-weight:bold}
-h1{font-size:clamp(43px,6.5vw,80px);line-height:1.02;letter-spacing:-3px;margin:25px 0}
-h2{font-size:clamp(27px,4vw,42px);margin:12px 0 28px}
-.subtitle{color:#aaa;line-height:1.8;max-width:470px;font-size:14px;margin-bottom:28px}
-.gold-btn{display:inline-block;border:0;background:linear-gradient(120deg,#e8ce8c,#b78a3e);color:#111;padding:15px 20px;font-size:11px;font-weight:900;letter-spacing:1px;transition:.2s}
-.gold-btn:hover{transform:translateY(-2px);filter:brightness(1.1)}
-.text-btn{display:inline-block;margin-left:16px;color:#bbb;font-size:12px}
-.hero-card{border:1px solid #665332;background:linear-gradient(145deg,#1b1915,#0d0d0d);padding:35px;position:relative;animation:float 5s ease-in-out infinite}
-.crown{font-size:44px;color:var(--gold)}.hero-card h2{font-size:25px;overflow-wrap:anywhere}.gold-line{height:2px;width:65px;background:var(--gold);margin:20px 0}
-.muted{color:var(--muted);font-size:13px;line-height:1.7}.hero-number{position:absolute;right:20px;bottom:5px;font-size:48px;font-weight:900;color:#29251c}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);padding:30px 9%;border-top:1px solid var(--border);border-bottom:1px solid var(--border);gap:20px}
-.stats div{display:flex;flex-direction:column;gap:8px}.stats strong{font-size:27px;color:var(--gold)}.stats span{color:var(--muted);font-size:12px}
-.section{padding:75px 9%;border-bottom:1px solid var(--border)}
-.section-heading{display:flex;justify-content:space-between;align-items:center;gap:20px}.tag{border:1px solid #5d4a28;padding:9px 13px;color:var(--gold);font-size:10px;letter-spacing:2px}
-.players{display:grid;gap:12px}
-.player{display:grid;grid-template-columns:55px 1fr auto;gap:16px;align-items:center;padding:21px;background:var(--panel);border:1px solid var(--border);transition:.25s}
-.player:hover{border-color:var(--gold);transform:translateX(4px)}
-.rank{font-size:25px;font-weight:900;color:var(--gold)}.player h3{margin:0 0 7px;font-size:16px;overflow-wrap:anywhere}.player p{margin:0;color:var(--muted);font-size:12px}.money{font-weight:bold;color:var(--gold);text-align:right;font-size:14px}
-.awards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.award,.support-card{padding:25px;background:var(--panel);border:1px solid var(--border);transition:.25s}
-.award:hover,.support-card:hover{border-color:var(--gold);transform:translateY(-4px)}
-.award div{font-size:32px;color:var(--gold)}.award h3,.support-card h3{font-size:16px}.award p,.support-card p{font-size:12px;line-height:1.8;color:var(--muted)}
-.apply-section{background:linear-gradient(110deg,#12100b,#080808 60%)}
-form{max-width:650px;display:grid;gap:17px;margin-top:30px}
-label{display:grid;gap:8px;font-size:12px;color:#bbb}
-input,textarea{width:100%;padding:14px;background:#101010;border:1px solid #333;color:white;outline:none;border-radius:0}
-input:focus,textarea:focus{border-color:var(--gold)}textarea{resize:vertical}
-.form-message{font-size:13px;line-height:1.6}
-.support-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.support-card a{color:var(--gold);font-size:12px}
-.small{font-size:11px}
-.admin-panel{background:#10100d}
-.hidden{display:none!important}
-.admin-panel button{margin-top:8px}
-.admin-entry{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px;border-bottom:1px solid var(--border);font-size:13px}
-.admin-entry button{background:transparent;color:#ff7777;border:1px solid #633;padding:7px}
-.import-label{display:block;margin-top:18px}
-footer{text-align:center;padding:35px 7%;color:var(--muted);font-size:10px;letter-spacing:1px}
-footer .logo{display:inline-block;color:var(--text);margin-bottom:12px}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-@media(max-width:760px){
- .navbar{padding:15px 5%;flex-wrap:wrap}.navbar nav{order:3;width:100%;overflow-x:auto;padding:7px 0;gap:20px}.navbar nav a{white-space:nowrap}
- .hero{padding:55px 6%;grid-template-columns:1fr;gap:35px}.hero-card{max-width:450px;width:100%}
- .stats{padding:25px 6%;gap:12px}.stats strong{font-size:22px}.stats span{font-size:10px}
- .section{padding:55px 6%}.awards,.support-grid{grid-template-columns:1fr}
- .player{grid-template-columns:38px 1fr;gap:12px}.money{grid-column:2;text-align:left}
- .text-btn{margin:18px 0 0;display:block}.section-heading{align-items:flex-start}
-}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
-</style>
-</head>
-<body>
-<header class="navbar">
-<a href="#" class="logo">FORBES<span>30</span></a>
-<nav>
-<a href="#rating">Рейтинг</a><a href="#awards">Премии</a><a href="#apply">Заявка</a><a href="#support">Помощь</a>
-</nav>
-<button class="admin-btn" onclick="openAdmin()">ADMIN</button>
-</header>
+**Дата:** 15 ноября 2024  
+**Автор:** Светлана Майерс  
+**Рубрика:** Происшествия
 
-<main>
-<section class="hero">
-<div>
-<p class="eyebrow">BLACK RUSSIA · ANAPA · SERVER 30</p>
-<h1>СОЗДАВАЙ<br>СВОЮ <span>ИСТОРИЮ.</span></h1>
-<p class="subtitle">Рейтинг самых влиятельных игроков Анапы. Деньги, влияние, достижения и имя, которое знают все.</p>
-<a class="gold-btn" href="#rating">СМОТРЕТЬ РЕЙТИНГ ↗</a>
-<a class="text-btn" href="#apply">Подать заявку на участие</a>
-</div>
-<div class="hero-card">
-<div class="crown">♛</div><p class="eyebrow">TOP PLAYER</p>
-<h2 id="heroName">ANAPA LEGEND</h2>
-<div class="gold-line"></div><p class="muted">BLACK RUSSIA · №30</p>
-<div class="hero-number">#001</div>
-</div>
-</section>
+---
 
-<section class="stats">
-<div><strong id="playerCount">3</strong><span>В рейтинге</span></div>
-<div><strong>30</strong><span>Сервер Анапа</span></div>
-<div><strong>24 Ч</strong><span>Целевой срок рассмотрения заявок</span></div>
-</section>
+## Трагедия в Тюрт-Тас
 
-<section id="rating" class="section">
-<div class="section-heading"><div><p class="eyebrow">THE LEADERBOARD</p><h2>ТОП <span>ИГРОКОВ</span></h2></div><span class="tag">ANAPA 30</span></div>
-<div id="players" class="players"></div>
-</section>
+В деревне **Тюрт-Тас** произошло нападение трёх бурых медведей.  
+В результате инцидента погибли **3 человека** — в основном пастухи,  
+а также один молодой человек.
 
-<section id="awards" class="section">
-<p class="eyebrow">ANNUAL RECOGNITION</p><h2>ПРЕМИИ <span>FORBES</span></h2>
-<div class="awards">
-<article class="award"><div>✦</div><h3>Молодой миллионер</h3><p>За выдающийся финансовый результат и развитие капитала.</p></article>
-<article class="award"><div>♛</div><h3>Человек года</h3><p>За влияние и вклад в жизнь игрового сообщества.</p></article>
-<article class="award"><div>⚡</div><h3>Бизнес года</h3><p>За создание и развитие успешного игрового бизнеса.</p></article>
-</div>
-</section>
+## Угроза распространения
 
-<section id="apply" class="section apply-section">
-<p class="eyebrow">JOIN THE ELITE</p><h2>ПОДАТЬ <span>ЗАЯВКУ</span></h2>
-<p class="muted">Заполни анкету. Целевой срок рассмотрения — до 24 часов. В этой демонстрационной версии заявка сохраняется только в текущем браузере.</p>
-<form id="applicationForm">
-<label>Игровой никнейм<input name="nickname" required maxlength="40" placeholder="Например, Ivan_Anapa"></label>
-<label>Уровень персонажа<input name="level" required type="number" min="1" max="9999" placeholder="Ваш уровень"></label>
-<label>Состояние / капитал в игре<input name="wealth" required maxlength="100" placeholder="Например, $15.000.000"></label>
-<label>Почему ты достоин рейтинга?<textarea name="reason" required maxlength="1000" rows="4" placeholder="Расскажи о своих достижениях..."></textarea></label>
-<button class="gold-btn" type="submit">ОТПРАВИТЬ АНКЕТУ ↗</button>
-<p id="formMessage" class="form-message"></p>
-</form>
-<div id="applications"></div>
-</section>
+Специалисты предупреждают о высокой вероятности миграции хищников  
+в соседние населённые пункты:
 
-<section id="support" class="section">
-<p class="eyebrow">WE ARE HERE TO HELP</p><h2>ЦЕНТР <span>ПОМОЩИ</span></h2>
-<div class="support-grid">
-<article class="support-card"><h3>Помощь</h3><p>Вопросы по рейтингу, премиям и участию в проекте.</p><a href="mailto:support@example.com">Связаться ↗</a></article>
-<article class="support-card"><h3>Техническая поддержка</h3><p>Сообщи об ошибке или технической проблеме сайта.</p><a href="mailto:tech@example.com">Сообщить ↗</a></article>
-<article class="support-card"><h3>Помощь мне</h3><p>Оставь сообщение администрации фан-проекта.</p><a href="mailto:admin@example.com">Написать ↗</a></article>
-</div>
-<p class="muted small">Замени example.com на свои настоящие контактные адреса.</p>
-</section>
+- Аал **Лырсы**
+- Аал **Картоев**
+- Село **Усть-Хойза**
 
-<section id="adminPanel" class="section admin-panel hidden">
-<div class="section-heading"><h2>АДМИН <span>ПАНЕЛЬ</span></h2><button class="outline-btn" onclick="closeAdmin()">Закрыть ✕</button></div>
-<p class="muted">Управление рейтингом. Данные сохраняются только в браузере, в котором ты работаешь.</p>
-<form id="playerForm">
-<label>Никнейм<input name="name" required maxlength="40" placeholder="Игровой ник"></label>
-<label>Капитал<input name="money" required maxlength="60" placeholder="$10.000.000"></label>
-<label>Описание<input name="description" maxlength="150" placeholder="Предприниматель"></label>
-<button class="gold-btn" type="submit">ДОБАВИТЬ ИГРОКА</button>
-</form>
-<div id="adminPlayers"></div>
-<button class="outline-btn" onclick="exportData()">ЭКСПОРТИРОВАТЬ ДАННЫЕ JSON</button>
-<label class="import-label">Импортировать JSON<input type="file" accept=".json,application/json" onchange="importData(event)"></label>
-<p class="muted small">Демонстрационный пароль не защищает сайт по-настоящему. Не используй эту панель для секретных или важных данных.</p>
-</section>
-</main>
+## Предыдущий случай в Усть-Хойза
 
-<footer>
-<a href="#" class="logo">FORBES<span>30</span></a>
-<p>НЕОФИЦИАЛЬНЫЙ ФАН-ПРОЕКТ · BLACK RUSSIA · ANAPA</p>
-<p class="small">Проект не связан с журналом Forbes или официальной администрацией Black Russia и не является их партнёром.</p>
-</footer>
+Ранее в **Усть-Хойза** уже фиксировалось нападение медведей на фермеров.  
+Хищник был уничтожен. По описаниям очевидцев, это был медведь-предводитель:
 
-<script>
-const STORAGE_KEY = "forbes30_players";
-const APP_KEY = "forbes30_applications";
-const defaultPlayers = [
- {name:"ANAPA LEGEND",money:"$150.000.000",description:"Легенда сервера"},
- {name:"Gold Business",money:"$85.000.000",description:"Предприниматель"},
- {name:"Mister Capital",money:"$42.000.000",description:"Инвестор"}
-];
+| Параметр | Значение |
+|----------|----------|
+| Рост | 2,4 м |
+| Ширина в холке | ~1,1 м |
+| Вес (оценка) | 400–450 кг |
 
-function load(key,fallback){
- try {
-  const data=localStorage.getItem(key);
-  return data ? JSON.parse(data) : fallback;
- } catch(e){return fallback}
-}
-function save(key,data){localStorage.setItem(key,JSON.stringify(data))}
-let players=load(STORAGE_KEY,defaultPlayers);
-let applications=load(APP_KEY,[]);
+## Рекомендации населению
 
-function renderPlayers(){
- const list=document.getElementById("players");
- list.replaceChildren();
- players.forEach((p,i)=>{
-  const row=document.createElement("article");
-  row.className="player";
-  const rank=document.createElement("div");
-  rank.className="rank";
-  rank.textContent=String(i+1).padStart(2,"0");
-  const info=document.createElement("div");
-  const name=document.createElement("h3");
-  name.textContent=p.name;
-  const desc=document.createElement("p");
-  desc.textContent=p.description||"Участник рейтинга";
-  info.append(name,desc);
-  const money=document.createElement("div");
-  money.className="money";
-  money.textContent=p.money;
-  row.append(rank,info,money);
-  list.append(row);
- });
- document.getElementById("playerCount").textContent=players.length;
- document.getElementById("heroName").textContent=players[0]?.name||"ANAPA LEGEND";
- renderAdmin();
-}
-function renderAdmin(){
- const list=document.getElementById("adminPlayers");
- list.replaceChildren();
- players.forEach((p,i)=>{
-  const row=document.createElement("div");
-  row.className="admin-entry";
-  const text=document.createElement("span");
-  text.textContent=(i+1)+". "+p.name+" — "+p.money;
-  const btn=document.createElement("button");
-  btn.textContent="Удалить";
-  btn.onclick=()=>{
-   if(!confirm("Удалить игрока "+p.name+"?"))return;
-   players.splice(i,1);save(STORAGE_KEY,players);renderPlayers();
-  };
-  row.append(text,btn);list.append(row);
- });
-}
-document.getElementById("applicationForm").addEventListener("submit",function(e){
- e.preventDefault();
- const form=new FormData(this);
- const application={
-  nickname:String(form.get("nickname")).trim(),
-  level:String(form.get("level")),
-  wealth:String(form.get("wealth")).trim(),
-  reason:String(form.get("reason")).trim(),
-  status:"Ожидает рассмотрения",
-  date:new Date().toLocaleString("ru-RU")
- };
- applications.push(application);
- save(APP_KEY,applications);
- document.getElementById("formMessage").textContent=
-  "Анкета сохранена в этом браузере. Это демоверсия: администрация не получит её автоматически.";
- this.reset();
- renderApplications();
-});
-function renderApplications(){
- const list=document.getElementById("applications");
- list.replaceChildren();
- if(!applications.length)return;
- const title=document.createElement("h3");
- title.textContent="Заявки в этом браузере";
- list.append(title);
- applications.forEach(a=>{
-  const item=document.createElement("div");
-  item.className="admin-entry";
-  const text=document.createElement("span");
-  text.textContent=a.nickname+" · уровень "+a.level+" · "+a.status;
-  item.append(text);list.append(item);
- });
-}
-function openAdmin(){
- const password=prompt("Введите пароль администратора:");
- if(password!=="admin30"){if(password!==null)alert("Неверный пароль");return}
- document.getElementById("adminPanel").classList.remove("hidden");
- document.getElementById("adminPanel").scrollIntoView({behavior:"smooth"});
-}
-function closeAdmin(){document.getElementById("adminPanel").classList.add("hidden")}
-document.getElementById("playerForm").addEventListener("submit",function(e){
- e.preventDefault();
- const form=new FormData(this);
- players.push({
-  name:String(form.get("name")).trim(),
-  money:String(form.get("money")).trim(),
-  description:String(form.get("description")).trim()
- });
- save(STORAGE_KEY,players);
- renderPlayers();
- this.reset();
-});
-function exportData(){
- const blob=new Blob([JSON.stringify({players,applications},null,2)],{type:"application/json"});
- const url=URL.createObjectURL(blob);
- const link=document.createElement("a");
- link.href=url;link.download="forbes30-data.json";link.click();
- URL.revokeObjectURL(url);
-}
-function importData(event){
- const file=event.target.files[0];
- if(!file)return;
- const reader=new FileReader();
- reader.onload=()=>{
-  try{
-   const data=JSON.parse(reader.result);
-   if(!Array.isArray(data.players))throw new Error("Нет списка игроков");
-   players=data.players;
-   applications=Array.isArray(data.applications)?data.applications:[];
-   save(STORAGE_KEY,players);save(APP_KEY,applications);
-   renderPlayers();renderApplications();
-   alert("Данные импортированы");
-  }catch(e){alert("Не удалось импортировать JSON")}
-  event.target.value="";
- };
- reader.readAsText(file);
-}
-renderPlayers();
-renderApplications();
-</script>
-</body>
-</html>
+- Не выходить в лес без необходимости
+- Не оставлять скот без присмотра
+- Сообщать о sightings хищников в экстренные службы
+
+---
+
+*Материал подготовила Светлана Майерс для издания «Хабарлар».*
